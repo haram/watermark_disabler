@@ -6,7 +6,7 @@ namespace impl
 {
 	struct unique_pool
 	{
-		void operator( )( void* pool ) noexcept
+		void operator( )( void* pool )
 		{
 			if ( pool )
 				ExFreePoolWithTag( pool, 0 );
@@ -17,7 +17,7 @@ namespace impl
 
 	struct unique_object
 	{
-		void operator( )( void* object ) noexcept
+		void operator( )( void* object )
 		{
 			if ( object )
 				ObfDereferenceObject( object );
