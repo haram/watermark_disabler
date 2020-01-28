@@ -23,7 +23,7 @@ namespace impl
 						 /* iterate through validity of the mask, mask sz is essentially equal to the byte sequence specified in signature */
 						 for ( ; *signature_mask; ++signature_mask, ++bytes, ++sig_as_bytes )
 						 {
-							 /* if the signature misk is 'x' ( a valid byte, not an always match / wildcard ), and the current byte is not equal to the byte in the sig, then break */
+							 /* if the signature mask is 'x' ( a valid byte, not an always match / wildcard ), and the current byte is not equal to the byte in the sig, then break */
 							 if ( *signature_mask == 'x' && *bytes != *sig_as_bytes )
 								 return false;
 						 }
