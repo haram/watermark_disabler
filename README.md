@@ -31,4 +31,4 @@ if ( should_draw_watermark )
 ### approach #2
 PaintWatermark calls GreExtTextOutWInternal (which is the internal function for ExtTextOutW/NtGdiExtTextOutW in wingdi.h). 
 
-The argument passed for size is a global called "gSafeModeStrLen", by setting the size (c) to 0, the string won't be rendered. The pattern for the aforementioned global inside win32kfull is 44 8B C8 44 89 0D + 7
+The argument passed for size (c) is a global called "gSafeModeStrLen", by setting the size (c) to 0, the string won't be rendered. The pattern for the aforementioned global inside win32kfull is 44 8B C8 44 89 0D + 7
