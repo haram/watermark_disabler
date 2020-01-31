@@ -6,7 +6,7 @@ The function responsible for drawing whole desktop including the watermark is xx
 Both of the approaches used by this project were found while analyzing functions further down in the callstack.
 
 ### approach #1
-As you can see from the snippets below, forcing gpsi->unk874h to be zero the checks will fail and watermark won't be drawn.
+As you can see from the snippets below, forcing gpsi->unk874h to be zero the checks will fail and the watermark won't be drawn.
 ```cpp
 // global tagSERVERINFO* gpsi;
 // global _THREADINFO* gptiCurrent;
