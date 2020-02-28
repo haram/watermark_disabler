@@ -5,6 +5,20 @@
 
 namespace impl
 {
+	inline bool search_for_signature_helper( const uint8_t* data, const uint8_t* signature, const char* mask )
+	{
+		// check if page is correct & readable (this internally checks PTE, PDE, ...)
+		if ( !FN( MmIsAddressValid )( const_cast< uint8_t* >( data ) ) )
+			return false;
+
+		// iterate through validity of the mask (mask & signature are equal
+		for ( ; *mask; ++mask, ++data, ++signature )
+				if ( *mask == 'x' && *data != *signature ) // if mask is 'x' (a match), and the current byte is not equal to the byte in the signature, then return false.
+					return false;
+
+		return true;
+	}
+	
 	std::uint8_t* search_for_signature( const nt::rtl_module_info* module, const char* signature, const char* signature_mask )
 	{
 		if ( !module )
@@ -16,21 +30,7 @@ namespace impl
 		/* iterate the entire module */
 		for ( auto segment = module_start; segment < module_size; segment++ )
 		{
-			if ( [ & ]( const std::uint8_t* bytes ) -> bool
-				 {
-					 auto sig_as_bytes = reinterpret_cast< std::uint8_t* >( const_cast< char* >( signature ) );
-
-						 /* iterate through validity of the mask, mask sz is essentially equal to the byte sequence specified in signature */
-						 for ( ; *signature_mask; ++signature_mask, ++bytes, ++sig_as_bytes )
-						 {
-							 /* if the signature mask is 'x' ( a valid byte, not an always match / wildcard ), and the current byte is not equal to the byte in the sig, then break */
-							 if ( *signature_mask == 'x' && *bytes != *sig_as_bytes )
-								 return false;
-						 }
-
-					 return ( *signature_mask ) == 0;
-				 }( segment )
-					 )
+			if ( search_for_signature_helper( segment, reinterpret_cast< std::uint8_t* >( const_cast< char* >( signature ) ), signature_mask ) )
 				return segment;
 		}
 
