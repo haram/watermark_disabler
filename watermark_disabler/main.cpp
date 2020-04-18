@@ -50,7 +50,7 @@ NTSTATUS driver_entry( )
 		return STATUS_UNSUCCESSFUL;
 	}
 
-	const auto gpsi = *reinterpret_cast< std::uint8_t** >( impl::resolve_mov( gpsi_instruction ) );
+	const auto gpsi = *reinterpret_cast< std::uint64_t* >( impl::resolve_mov( gpsi_instruction ) );
 
 	if ( !gpsi )
 	{
