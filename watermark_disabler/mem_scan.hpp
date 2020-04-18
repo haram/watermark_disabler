@@ -5,10 +5,10 @@
 
 namespace impl
 {
-	inline bool search_for_signature_helper( const uint8_t* data, const uint8_t* signature, const char* mask )
+	inline bool search_for_signature_helper( const std::uint8_t* data, const std::uint8_t* signature, const char* mask )
 	{
 		// check if page is correct & readable (this internally checks PTE, PDE, ...)
-		if ( !MmIsAddressValid( const_cast< uint8_t* >( data ) ) )
+		if ( !MmIsAddressValid( const_cast< std::uint8_t* >( data ) ) )
 			return false;
 
 		// iterate through validity of the mask (mask & signature are equal
